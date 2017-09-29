@@ -1,6 +1,6 @@
 {
 	"name": "jabli/effekt",
-	"description": "joules to calories",
+	"description": "unit conversions",
 	"type": "library",
 	"require" : {
 		"php": ">=5.3.0"
