@@ -12,4 +12,14 @@ class Price extends Base
 		$this->amount = static::convertToFloat($amount);
 		$this->currencyCode = $currencyCode;
 	}
+
+	public function getAmount()
+	{
+		return $this->amount;
+	}
+
+	public function getCurrencyCode()
+	{
+		return $this->currencyCode;
+	}
 }

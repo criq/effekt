@@ -31,8 +31,17 @@ class AmountWithUnit extends Base
 		return new static($this->amount * $multiplier, $this->unit);
 	}
 
+	public function getAmount()
+	{
+		return $this->amount;
+	}
+
 	public function setUnit($unit)
 	{
 		return new static($this->amount, $unit);
+	}
+
+	public function getUnit() {
+		return $this->unit;
 	}
 }

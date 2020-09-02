@@ -13,6 +13,16 @@ class PricePerAmountWithUnit
 		$this->amountWithUnit = $amountWithUnit;
 	}
 
+	public function getPrice()
+	{
+		return $this->price;
+	}
+
+	public function getAmountWithUnit()
+	{
+		return $this->amountWithUnit;
+	}
+
 	public function getInCurrency($currencyCode)
 	{
 		if ($this->price->currencyCode == $currencyCode) {
