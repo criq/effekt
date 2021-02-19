@@ -3,8 +3,7 @@
 	"description": "unit conversions",
 	"type": "library",
 	"require" : {
-		"php": ">=7.4",
-		"jabli/katu": "v2.x-dev"
+		"php": ">=7.4"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
