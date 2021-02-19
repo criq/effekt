@@ -5,6 +5,9 @@
 	"require" : {
 		"php": ">=7.4"
 	},
+	"require-dev": {
+		"jabli/katu": "v2.x-dev"
+	},
 	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
