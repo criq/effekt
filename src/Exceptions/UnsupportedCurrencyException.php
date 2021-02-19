@@ -2,6 +2,6 @@
 
 namespace Effekt\Exceptions;
 
-class UnsupportedCurrencyException extends \Exception {
-
+class UnsupportedCurrencyException extends \Exception
+{
 }
