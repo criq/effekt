@@ -28,9 +28,9 @@ class PricePerAmountWithUnit
 		if ($this->price->currencyCode == $currencyCode) {
 			return $this;
 		} else {
-			$data = \Katu\Utils\Cache::getUrl(\Katu\Types\TUrl::make('http://api.fixer.io/latest', [
+			$data = \Katu\Cache\URL::get(\Katu\Types\TUrl::make('http://api.fixer.io/latest', [
 				'base' => $this->price->currencyCode,
-			]), 86400);
+			]), '1 day');
 
 			if (!isset($data->rates->$currencyCode)) {
 				throw new Exceptions\UnsupportedCurrencyException;
