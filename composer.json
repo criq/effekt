@@ -6,7 +6,7 @@
 		"php": ">=7.4"
 	},
 	"require-dev": {
-		"jabli/katu": "v2.x-dev"
+		"criq/katu": "v2.x-dev"
 	},
 	"autoload": {
 		"psr-4": {
