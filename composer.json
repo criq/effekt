@@ -1,5 +1,5 @@
 {
-	"name": "jabli/effekt",
+	"name": "criq/effekt",
 	"description": "unit conversions",
 	"type": "library",
 	"require" : {
