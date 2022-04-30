@@ -4,8 +4,8 @@ namespace Effekt;
 
 class Base
 {
-	public static function convertToFloat($string)
+	public static function convertToFloat(string $string): float
 	{
-		return (float) floatval(trim(strtr(preg_replace('/\s/u', null, $string), ',', '.')));
+		return (float)floatval(trim(strtr(preg_replace("/\s/u", "", $string), ",", ".")));
 	}
 }

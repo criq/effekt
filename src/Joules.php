@@ -8,41 +8,41 @@ class Joules
 
 	public $amount;
 
-	public function __construct($amount, $unit)
+	public function __construct(float $amount, string $unit)
 	{
 		switch (strtolower($unit)) {
-			case 'cal':
+			case "cal":
 				$this->amount = $amount * static::CONVERSION_CALORIES;
 				break;
-			case 'kcal':
+			case "kcal":
 				$this->amount = $amount * static::CONVERSION_CALORIES * 1000;
 				break;
-			case 'j':
+			case "j":
 				$this->amount = $amount;
 				break;
-			case 'kj':
+			case "kj":
 				$this->amount = $amount * 1000;
 				break;
 		}
 	}
 
-	public function toCal()
+	public function toCal(): Quantity
 	{
-		return new AmountWithUnit($this->amount / static::CONVERSION_CALORIES, 'cal');
+		return new Quantity($this->amount / static::CONVERSION_CALORIES, "cal");
 	}
 
-	public function toKCal()
+	public function toKCal(): Quantity
 	{
-		return new AmountWithUnit($this->amount / static::CONVERSION_CALORIES / 1000, 'kcal');
+		return new Quantity($this->amount / static::CONVERSION_CALORIES / 1000, "kcal");
 	}
 
-	public function toJ()
+	public function toJ(): Quantity
 	{
-		return new AmountWithUnit($this->amount, 'J');
+		return new Quantity($this->amount, "J");
 	}
 
-	public function toKJ()
+	public function toKJ(): Quantity
 	{
-		return new AmountWithUnit($this->amount / 1000, 'kJ');
+		return new Quantity($this->amount / 1000, "kJ");
 	}
 }

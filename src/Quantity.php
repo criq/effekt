@@ -2,46 +2,46 @@
 
 namespace Effekt;
 
-class AmountWithUnit extends Base
+class Quantity extends Base
 {
 	public $amount;
 	public $unit;
 
-	public function __construct($amount, $unit)
+	public function __construct(float $amount, string $unit)
 	{
 		$this->amount = static::convertToFloat($amount);
 		$this->unit = trim($unit);
 	}
 
-	public function __toString()
+	public function __toString(): string
 	{
-		return (string)(implode(' ', [
+		return (string)(implode(" ", [
 			$this->amount,
 			$this->unit,
 		]));
 	}
 
-	public function getJoules()
+	public function getJoules(): Joules
 	{
 		return new Joules($this->amount, $this->unit);
 	}
 
-	public function multiply($multiplier)
+	public function multiply(float $multiplier): Quantity
 	{
 		return new static($this->amount * $multiplier, $this->unit);
 	}
 
-	public function getAmount()
+	public function getAmount(): float
 	{
 		return $this->amount;
 	}
 
-	public function setUnit($unit)
+	public function setUnit(string $unit): Quantity
 	{
 		return new static($this->amount, $unit);
 	}
 
-	public function getUnit()
+	public function getUnit(): string
 	{
 		return $this->unit;
 	}
