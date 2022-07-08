@@ -2,7 +2,7 @@
 
 namespace Effekt;
 
-class Quantity extends Base
+class Quantity extends Base implements QuantityInterface
 {
 	public $amount;
 	public $unit;
@@ -36,6 +36,11 @@ class Quantity extends Base
 		return $this->amount;
 	}
 
+	public function getAmountFloat(): float
+	{
+		return $this->getAmount();
+	}
+
 	public function setUnit(string $unit): Quantity
 	{
 		return new static($this->amount, $unit);
@@ -44,5 +49,10 @@ class Quantity extends Base
 	public function getUnit(): string
 	{
 		return $this->unit;
+	}
+
+	public function getUnitString(): string
+	{
+		return $this->getUnit();
 	}
 }
