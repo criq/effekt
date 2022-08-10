@@ -2,8 +2,6 @@
 
 namespace Effekt;
 
-use Katu\Tools\Calendar\Timeout;
-
 class PricePerQuantity
 {
 	public $price;
@@ -30,10 +28,8 @@ class PricePerQuantity
 		if ($this->price->currencyCode == $currencyCode) {
 			return $this;
 		} else {
-			$url = \Katu\Types\TUrl::make("http://api.fixer.io/latest", [
-				"base" => $this->price->currencyCode,
-			]);
-			$data = \Katu\Cache\URL::get($url, new Timeout("1 day"));
+			$url = "http://api.fixer.io/latest?base={$this->price->currencyCode}";
+			$data = (new \Curl\Curl)->get($url);
 
 			if (!isset($data->rates->$currencyCode)) {
 				throw new Exceptions\UnsupportedCurrencyException;

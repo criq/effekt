@@ -6,7 +6,7 @@
 		"php": ">=7.4"
 	},
 	"require-dev": {
-		"criq/katu": "^4"
+		"curl/curl": "@stable"
 	},
 	"autoload": {
 		"psr-4": {
