@@ -16,8 +16,8 @@ class Quantity extends Base implements QuantityInterface
 	public function __toString(): string
 	{
 		return (string)(implode(" ", [
-			$this->amount,
-			$this->unit,
+			$this->getAmount(),
+			$this->getUnit(),
 		]));
 	}
 
