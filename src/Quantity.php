@@ -15,8 +15,10 @@ class Quantity extends Base implements QuantityInterface
 
 	public function __toString(): string
 	{
+		$numberFormatter = new \NumberFormatter("cs_CZ", \NumberFormatter::DECIMAL);
+
 		return (string)(implode(" ", [
-			$this->getAmount(),
+			$numberFormatter->format($this->getAmount()),
 			$this->getUnit(),
 		]));
 	}
