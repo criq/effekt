@@ -4,33 +4,28 @@ namespace Effekt;
 
 class Quantity extends Base implements QuantityInterface
 {
-	public $amount;
-	public $unit;
+	protected $amount;
+	protected $unit;
 
-	public function __construct(float $amount, string $unit)
+	public function __construct(string $amount, string $unit)
 	{
-		$this->amount = static::convertToFloat($amount);
-		$this->unit = trim($unit);
+		$this->setAmount($amount);
+		$this->setUnit($unit);
 	}
 
 	public function __toString(): string
 	{
-		$numberFormatter = new \NumberFormatter("cs_CZ", \NumberFormatter::DECIMAL);
-
 		return (string)(implode(" ", [
-			$numberFormatter->format($this->getAmount()),
+			(new \NumberFormatter("cs_CZ", \NumberFormatter::DECIMAL))->format($this->getAmount()),
 			$this->getUnit(),
 		]));
 	}
 
-	public function getJoules(): Joules
+	public function setAmount(string $amount): Quantity
 	{
-		return new Joules($this->amount, $this->unit);
-	}
+		$this->amount = static::convertToFloat($amount);
 
-	public function multiply(float $multiplier): Quantity
-	{
-		return new static($this->amount * $multiplier, $this->unit);
+		return $this;
 	}
 
 	public function getAmount(): float
@@ -43,9 +38,16 @@ class Quantity extends Base implements QuantityInterface
 		return $this->getAmount();
 	}
 
+	public function getJoules(): Joules
+	{
+		return new Joules($this->getAmount(), $this->getUnit());
+	}
+
 	public function setUnit(string $unit): Quantity
 	{
-		return new static($this->amount, $unit);
+		$this->unit = trim($unit);
+
+		return $this;
 	}
 
 	public function getUnit(): string
@@ -56,5 +58,10 @@ class Quantity extends Base implements QuantityInterface
 	public function getUnitString(): string
 	{
 		return $this->getUnit();
+	}
+
+	public function multiply(float $multiplier): Quantity
+	{
+		return new static($this->getAmount() * $multiplier, $this->getUnit());
 	}
 }

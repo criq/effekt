@@ -2,47 +2,49 @@
 
 namespace Effekt;
 
-class Joules
+class Joules extends Quantity
 {
 	const CONVERSION_CALORIES = 4.184;
 
-	public $amount;
-
-	public function __construct(float $amount, string $unit)
+	public function __construct(string $amount, string $unit)
 	{
-		switch (strtolower($unit)) {
-			case "cal":
-				$this->amount = $amount * static::CONVERSION_CALORIES;
+		$this->setUnit("J");
+
+		$amount = static::convertToFloat($amount);
+
+		switch (strtoupper($unit)) {
+			case "KCAL":
+				$this->setAmount($amount * static::CONVERSION_CALORIES * 1000);
 				break;
-			case "kcal":
-				$this->amount = $amount * static::CONVERSION_CALORIES * 1000;
+			case "CAL":
+				$this->setAmount($amount * static::CONVERSION_CALORIES);
 				break;
-			case "j":
-				$this->amount = $amount;
+			case "KJ":
+				$this->setAmount($amount * 1000);
 				break;
-			case "kj":
-				$this->amount = $amount * 1000;
+			default:
+				$this->setAmount($amount);
 				break;
 		}
 	}
 
 	public function toCal(): Quantity
 	{
-		return new Quantity($this->amount / static::CONVERSION_CALORIES, "cal");
+		return new Quantity($this->getAmount() / static::CONVERSION_CALORIES, "cal");
 	}
 
 	public function toKCal(): Quantity
 	{
-		return new Quantity($this->amount / static::CONVERSION_CALORIES / 1000, "kcal");
+		return new Quantity($this->getAmount() / static::CONVERSION_CALORIES / 1000, "kcal");
 	}
 
 	public function toJ(): Quantity
 	{
-		return new Quantity($this->amount, "J");
+		return new Quantity($this->getAmount(), "J");
 	}
 
 	public function toKJ(): Quantity
 	{
-		return new Quantity($this->amount / 1000, "kJ");
+		return new Quantity($this->getAmount() / 1000, "kJ");
 	}
 }
