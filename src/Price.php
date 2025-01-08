@@ -15,7 +15,7 @@ class Price extends Base
 
 	public function setAmount(string $amount)
 	{
-		$this->amount = static::convertToFloat($amount);
+		$this->amount = static::getFloat($amount);
 
 		return $this;
 	}

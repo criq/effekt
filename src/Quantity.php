@@ -7,7 +7,7 @@ class Quantity extends Base implements QuantityInterface
 	protected $amount;
 	protected $unit;
 
-	public function __construct(string $amount, string $unit)
+	public function __construct($amount, $unit)
 	{
 		$this->setAmount($amount);
 		$this->setUnit($unit);
@@ -16,14 +16,14 @@ class Quantity extends Base implements QuantityInterface
 	public function __toString(): string
 	{
 		return (string)(implode(" ", [
-			(new \NumberFormatter("cs_CZ", \NumberFormatter::DECIMAL))->format($this->getAmount()),
-			$this->getUnit(),
+			$this->getNumberFormatter()->format($this->getAmount()),
+			$this->getUnitString(),
 		]));
 	}
 
-	public function setAmount(string $amount): Quantity
+	public function setAmount($amount): Quantity
 	{
-		$this->amount = static::convertToFloat($amount);
+		$this->amount = static::getFloat($amount);
 
 		return $this;
 	}
@@ -38,30 +38,56 @@ class Quantity extends Base implements QuantityInterface
 		return $this->getAmount();
 	}
 
-	public function getJoules(): Joules
+	public function setUnit($unit): Quantity
 	{
-		return new Joules($this->getAmount(), $this->getUnit());
-	}
+		$unit = Unit::createFromInput($unit);
+		if (!$unit) {
+			throw new \Effekt\Exceptions\UnsupportedUnitException;
+		}
 
-	public function setUnit(string $unit): Quantity
-	{
-		$this->unit = trim($unit);
+		$this->unit = $unit;
 
 		return $this;
 	}
 
-	public function getUnit(): string
+	public function getUnit(): Unit
 	{
 		return $this->unit;
 	}
 
 	public function getUnitString(): string
 	{
-		return $this->getUnit();
+		return $this->getUnit()->getAbbr();
 	}
 
-	public function multiply(float $multiplier): Quantity
+	public function getMultiplied(float $multiplier): Quantity
 	{
 		return new static($this->getAmount() * $multiplier, $this->getUnit());
+	}
+
+	public function getInUnit($unit): ?Quantity
+	{
+		$unit = Unit::createFromInput($unit);
+		if (!$unit) {
+			throw new \Effekt\Exceptions\UnsupportedUnitException;
+		}
+
+		if ($unit == $this->getUnit()) {
+			return $this;
+		}
+
+		$conversion = $this->getUnit()->getConversion($unit);
+		if ($conversion) {
+			return new static($this->getAmount() * $conversion->getRatio(), $unit);
+		}
+
+		return null;
+	}
+
+	public function getInUnits($units): QuantityCollection
+	{
+		return new QuantityCollection(array_values(array_filter(array_map(function (Unit $unit) {
+			return $this->getInUnit($unit);
+		}, UnitCollection::createFromInput($units)->getArrayCopy()))));
 	}
 }
