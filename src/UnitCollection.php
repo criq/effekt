@@ -15,7 +15,7 @@ class UnitCollection extends \ArrayObject
 			new \Effekt\Units\KiloJouleUnit,
 			new \Effekt\Units\LitreUnit,
 			new \Effekt\Units\MillilitreUnit,
-			new \Effekt\Units\REUnit,
+			new \Effekt\Units\RetinolEquivalentUnit,
 		]);
 	}
 

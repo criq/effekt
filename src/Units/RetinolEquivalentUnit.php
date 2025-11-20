@@ -4,7 +4,7 @@ namespace Effekt\Units;
 
 use Effekt\Unit;
 
-class REUnit extends Unit
+class RetinolEquivalentUnit extends Unit
 {
 	public function getAbbr(): string
 	{
